@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Persue Bank Ledger";
+}
+
+<div data-ng-controller="ledgerController as vm">
+    <h2>Account Ledger</h2>
+    <form id="ledgerForm" name="ledgerForm" data-ng-submit="vm.submitTransaction(ledgerForm)" novalidate>
+        <div class="form-row">
+            <div class="col-sm-3 form-group">
+                <label for="dollarAmount">Payment Amount</label>
+                <label class="sr-only" for="dollarAmount">Amount (in dollars)</label>
+                <div class="input-group">
+                    <div class="input-group-addon">$</div>
+                    <input type="text" pattern="^\d+((\.|\,)\d{2})?$" class="form-control" id="dollarAmount" name="dollarAmount" data-ng-model="vm.paymentAmount" placeholder="Amount" required>
+                </div>
+                <div ng-messages="ledgerForm.dollarAmount.$error" class="alert-danger" ng-show="ledgerForm.dollarAmount.$error && ledgerForm.$submitted">
+                    <p ng-message="required">A USD dollar amount is required.</p>
+                    <p ng-message="pattern">Invalid USD dollar amount.</p>
+                </div>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="transDate">Pay Date</label>
+                <input type="date" class="form-control" id="transDate" name="transDate" data-ng-model="vm.transactionDate" required />
+                <div ng-messages="ledgerForm.transDate.$error" class="alert-danger" ng-show="ledgerForm.transDate.$error && ledgerForm.$submitted">
+                    <p ng-message="required">Pay Date is required.</p>
+                </div>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="transDate">Payee Description</label>
+                <input type="text" class="form-control" id="description" name="description" data-ng-model="vm.transactionDescription" required />
+                <div ng-messages="ledgerForm.description.$error" class="alert-danger" ng-show="ledgerForm.description.$error && ledgerForm.$submitted">
+                    <p ng-message="required">Payee description is required.</p>
+                </div>
+            </div>
+            <br/>
+            <div class="col-sm-3 form-group"><button type="submit" class="btn btn-primary">Pay It</button></div>
+        </div>
+        
+    </form>
+    <div id="accountTransactions">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Transaction Date</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="trans in vm.acctTransactions">
+                    <td>{{trans.whenTransacted | date:"MM/dd/yyyy"}}</td>
+                    <td>{{trans.amount | currency:"$"}}</td>
+                    <td>{{trans.description}}</td>
+                    <td>{{trans.transactionBalance | currency:"$"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/app/AccountLedger/controllers/ledgerController.js"></script>
+    <script src="~/app/AccountLedger/services/ledgerServices.js"></script>
+}

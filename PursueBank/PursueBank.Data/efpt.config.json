@@ -1,0 +1,1 @@
+﻿{"ContextClassName":"PursueContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":true,"OutputPath":"","ProjectRootNamespace":"PursueBank.Data","SelectedToBeGenerated":0,"Tables":["dbo.Account","dbo.Transaction","dbo.TransactionType"],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":true}
